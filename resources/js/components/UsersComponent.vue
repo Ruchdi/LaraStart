@@ -124,7 +124,12 @@
                     .then(({
                         data
                     }) => {
-                        console.log(data)
+                        $('#addNew').modal('hide');
+                        toast.fire({
+                            type: 'success',
+                            title: 'Created successfully'
+                        })
+                        this.loadUsers();
                     })
                 this.$Progress.finish()
             }
