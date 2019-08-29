@@ -74,6 +74,14 @@
                                     :class="{ 'is-invalid': form.errors.has('password') }" placeholder="Password">
                                 <has-error :form="form" field="password"></has-error>
                             </div>
+                            <div class="form-group">
+                                <label for="type">Type</label>
+                                <select v-model="form.type" class="form-control" name="type" :class="{ 'is-invalid': form.errors.has('type') }">
+                                    <option value="">Select Type</option>
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -93,15 +101,21 @@
                 form: new Form({
                     name: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    type: '',
+                    photo: ''
                 })
             }
         },
         methods: {
-            createUser () {
+            createUser() {
                 // Submit the form via a POST request
                 this.form.post('api/user')
-                .then(({ data }) => { console.log(data) })
+                    .then(({
+                        data
+                    }) => {
+                        console.log(data)
+                    })
             }
         },
         mounted() {
