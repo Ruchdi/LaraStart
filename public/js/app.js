@@ -2082,8 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$Progress.start(); // Submit the form via a POST request
 
-      this.form.post('api/user').then(function (_ref2) {
-        var data = _ref2.data;
+      this.form.post('api/user').then(function () {
         $('#addNew').modal('hide');
         toast.fire({
           type: 'success',
@@ -2091,6 +2090,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this2.loadUsers();
+      })["catch"](function () {//display error
       });
       this.$Progress.finish();
     }

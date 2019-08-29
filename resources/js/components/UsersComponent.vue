@@ -121,15 +121,16 @@
                 this.$Progress.start()
                 // Submit the form via a POST request
                 this.form.post('api/user')
-                    .then(({
-                        data
-                    }) => {
+                    .then(() => {
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
                             title: 'Created successfully'
                         })
                         this.loadUsers();
+                    })
+                    .catch(() =>{
+                        //display error
                     })
                 this.$Progress.finish()
             }
