@@ -8,6 +8,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+//VueProgressBar
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '5px'
+})
+
 //moment
 import moment from 'moment'
 

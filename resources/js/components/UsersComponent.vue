@@ -18,7 +18,7 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Type</th>
+                                <th>Role</th>
                                 <th>Registered At</th>
                                 <th>Modify</th>
                             </tr>
@@ -77,9 +77,9 @@
                                 <has-error :form="form" field="password"></has-error>
                             </div>
                             <div class="form-group">
-                                <label for="type">Type</label>
+                                <label for="type">User Role</label>
                                 <select v-model="form.type" class="form-control" name="type" :class="{ 'is-invalid': form.errors.has('type') }">
-                                    <option value="">Select Type</option>
+                                    <option value="">Select User Role</option>
                                     <option value="user">User</option>
                                     <option value="admin">Admin</option>
                                 </select>
@@ -113,9 +113,12 @@
         },
         methods: {
             loadUsers(){
+                this.$Progress.start()
                 axios.get('api/user').then(({data})=>(this.users = data.data));
+                this.$Progress.finish()
             },
             createUser() {
+                this.$Progress.start()
                 // Submit the form via a POST request
                 this.form.post('api/user')
                     .then(({
@@ -123,6 +126,7 @@
                     }) => {
                         console.log(data)
                     })
+                this.$Progress.finish()
             }
         },
         created() {
