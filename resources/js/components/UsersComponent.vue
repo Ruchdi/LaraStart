@@ -6,7 +6,8 @@
                     <h3 class="card-title">Users Table</h3>
 
                     <div class="card-tools">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addNew"><i class="fas fa-user-plus"></i> Add New</button>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#addNew"><i
+                                class="fas fa-user-plus"></i> Add New</button>
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -51,13 +52,34 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Save</button>
-                    </div>
+                    <form @submit.prevent="addNew" @keydown="form.onKeydown($event)">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input v-model="form.name" type="text" name="name" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('name') }" placeholder="Enter Name">
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input v-model="form.email" type="email" name="email" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('email') }" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone else.</small>
+                                <has-error :form="form" field="email"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input v-model="form.password" type="password" name="password" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('password') }" placeholder="Password">
+                                <has-error :form="form" field="password"></has-error>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button :disabled="form.busy" type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -66,6 +88,22 @@
 
 <script>
     export default {
+        data() {
+            return {
+                form: new Form({
+                    name: '',
+                    email: '',
+                    password: ''
+                })
+            }
+        },
+        methods: {
+            addNew () {
+            // Submit the form via a POST request
+            this.form.post('/addNew')
+                .then(({ data }) => { console.log(data) })
+            }
+        },
         mounted() {
             console.log('Component mounted.')
         }

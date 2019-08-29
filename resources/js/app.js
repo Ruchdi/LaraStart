@@ -7,9 +7,16 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+//vForm
+import { Form, HasError, AlertError } from 'vform'
+window.Form = Form;
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
+//Vue Router
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
-
 // 2. Define some routes
 // Each route should map to a component. The "component" can
 // either be an actual component constructor created via
