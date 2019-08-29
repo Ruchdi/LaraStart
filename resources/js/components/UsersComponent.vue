@@ -81,6 +81,7 @@
                                     <option value="user">User</option>
                                     <option value="admin">Admin</option>
                                 </select>
+                                <has-error :form="form" field="type"></has-error>
                             </div>
                         </div>
                         <div class="modal-footer">
