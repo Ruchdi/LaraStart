@@ -17,7 +17,8 @@ Vue.use(VueRouter)
 // We'll talk about nested routes later.
 let routes = [
     { path: '/dashboard', component: require('./components/DashboardComponent.vue').default },
-    { path: '/profile', component: require('./components/ProfileComponent.vue').default }
+    { path: '/users', component: require('./components/UsersComponent.vue').default },
+    { path: '/profile', component: require('./components/ProfileComponent.vue').default },
 ]
 
 // 3. Create the router instance and pass the `routes` option
