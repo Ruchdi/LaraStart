@@ -7,11 +7,6 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-
-//When used with a module system, you must explicitly install the router via Vue.use():
-
-//import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
@@ -29,6 +24,7 @@ let routes = [
 // You can pass in additional options here, but let's
 // keep it simple for now.
 const router = new VueRouter({
+    mode : 'history',
     routes // short for `routes: routes`
 })
 
