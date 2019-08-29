@@ -2053,9 +2053,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addNew: function addNew() {
+    createUser: function createUser() {
       // Submit the form via a POST request
-      this.form.post('/addNew').then(function (_ref) {
+      this.form.post('api/user').then(function (_ref) {
         var data = _ref.data;
         console.log(data);
       });
@@ -38557,7 +38557,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.addNew($event)
+                      return _vm.createUser($event)
                     },
                     keydown: function($event) {
                       return _vm.form.onKeydown($event)

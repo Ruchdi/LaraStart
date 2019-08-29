@@ -52,7 +52,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="addNew" @keydown="form.onKeydown($event)">
+                    <form @submit.prevent="createUser" @keydown="form.onKeydown($event)">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
@@ -98,9 +98,9 @@
             }
         },
         methods: {
-            addNew () {
-            // Submit the form via a POST request
-            this.form.post('/addNew')
+            createUser () {
+                // Submit the form via a POST request
+                this.form.post('api/user')
                 .then(({ data }) => { console.log(data) })
             }
         },
