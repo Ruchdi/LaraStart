@@ -12,22 +12,24 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
-                        <thead>
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead class="thead-dark">
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Type</th>
+                                <th>Registered At</th>
                                 <th>Modify</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>183</td>
-                                <td>John Doe</td>
-                                <td>11-7-2014</td>
-                                <td><span class="tag tag-success">Approved</span></td>
+                            <tr v-for="user in users" :key="user.id">
+                                <td>{{user.id}}</td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.email}}</td>
+                                <td><span class="tag tag-success">{{user.type}}</span></td>
+                                <td>{{user.created_at}}</td>
                                 <td>
                                     <a href=""><i class="fa fa-edit text-blue"></i></a>
                                     /
@@ -99,6 +101,7 @@
     export default {
         data() {
             return {
+                users : [],
                 form: new Form({
                     name: '',
                     email: '',
@@ -109,6 +112,9 @@
             }
         },
         methods: {
+            loadUsers(){
+                axios.get('api/user').then(({data})=>(this.users = data.data));
+            },
             createUser() {
                 // Submit the form via a POST request
                 this.form.post('api/user')
@@ -119,8 +125,8 @@
                     })
             }
         },
-        mounted() {
-            console.log('Component mounted.')
+        created() {
+            this.loadUsers();
         }
     }
 
