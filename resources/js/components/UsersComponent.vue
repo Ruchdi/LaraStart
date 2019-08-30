@@ -54,12 +54,13 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add New User</h5>
+                        <h5 v-show="!editmode" class="modal-title" id="myModalLabel">Add New User</h5>
+                        <h5 v-show="editmode" class="modal-title" id="myModalLabel">Update User's Information</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="createUser" @keydown="form.onKeydown($event)">
+                    <form @submit.prevent="editmode ? updateUser() : createUser()" @keydown="form.onKeydown($event)">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
@@ -94,7 +95,10 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button :disabled="form.busy" type="submit" class="btn btn-success">Save</button>
+                            <!-- for add show when edit mode = false -->
+                            <button v-show="!editmode" :disabled="form.busy" type="submit" class="btn btn-success">Save</button>
+                            <!-- for update show when edit mode = true -->
+                            <button v-show="editmode" :disabled="form.busy" type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
@@ -114,7 +118,10 @@
                     password: '',
                     type: '',
                     photo: ''
-                })
+                }),
+                //check when user click on edit save go to edit function.
+                //editmode ? updateUser() : createUser()
+                editmode: false,
             }
         },
         methods: {
@@ -126,18 +133,11 @@
                 this.$Progress.finish()
             },
             newModal() {
+                this.editmode = false;
                 //reset is a function in vForm
                 this.form.reset();
                 this.form.clear();
                 $('#myModal').modal('show');
-            },
-            editModal(user) {
-                //reset is a function in vForm
-                this.form.reset();
-                this.form.clear();
-                $('#myModal').modal('show');
-                //fill user data in a form
-                this.form.fill(user);
             },
             createUser() {
                 this.$Progress.start()
@@ -155,6 +155,18 @@
                         //display error
                     })
                 this.$Progress.finish()
+            },
+            editModal(user) {
+                this.editmode = true;
+                //reset is a function in vForm
+                this.form.reset();
+                this.form.clear();
+                $('#myModal').modal('show');
+                //fill user data in a form
+                this.form.fill(user);
+            },
+            updateUser(){
+                console.log('Editing Data.');
             },
             deleteUser(id,name) {
                 swal.fire({

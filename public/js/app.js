@@ -2059,6 +2059,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2069,7 +2073,10 @@ __webpack_require__.r(__webpack_exports__);
         password: '',
         type: '',
         photo: ''
-      })
+      }),
+      //check when user click on edit save go to edit function.
+      //editmode ? updateUser() : createUser()
+      editmode: false
     };
   },
   methods: {
@@ -2084,18 +2091,11 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.finish();
     },
     newModal: function newModal() {
-      //reset is a function in vForm
+      this.editmode = false; //reset is a function in vForm
+
       this.form.reset();
       this.form.clear();
       $('#myModal').modal('show');
-    },
-    editModal: function editModal(user) {
-      //reset is a function in vForm
-      this.form.reset();
-      this.form.clear();
-      $('#myModal').modal('show'); //fill user data in a form
-
-      this.form.fill(user);
     },
     createUser: function createUser() {
       var _this2 = this;
@@ -2113,6 +2113,18 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function () {//display error
       });
       this.$Progress.finish();
+    },
+    editModal: function editModal(user) {
+      this.editmode = true; //reset is a function in vForm
+
+      this.form.reset();
+      this.form.clear();
+      $('#myModal').modal('show'); //fill user data in a form
+
+      this.form.fill(user);
+    },
+    updateUser: function updateUser() {
+      console.log('Editing Data.');
     },
     deleteUser: function deleteUser(id, name) {
       var _this3 = this;
@@ -59228,7 +59240,43 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editmode,
+                        expression: "!editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "myModalLabel" }
+                  },
+                  [_vm._v("Add New User")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editmode,
+                        expression: "editmode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "myModalLabel" }
+                  },
+                  [_vm._v("Update User's Information")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
               _vm._v(" "),
               _c(
                 "form",
@@ -59236,7 +59284,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.createUser($event)
+                      _vm.editmode ? _vm.updateUser() : _vm.createUser()
                     },
                     keydown: function($event) {
                       return _vm.form.onKeydown($event)
@@ -59468,7 +59516,32 @@ var render = function() {
                     _c(
                       "button",
                       {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editmode,
+                            expression: "!editmode"
+                          }
+                        ],
                         staticClass: "btn btn-success",
+                        attrs: { disabled: _vm.form.busy, type: "submit" }
+                      },
+                      [_vm._v("Save")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editmode,
+                            expression: "editmode"
+                          }
+                        ],
+                        staticClass: "btn btn-primary",
                         attrs: { disabled: _vm.form.busy, type: "submit" }
                       },
                       [_vm._v("Save")]
@@ -59508,24 +59581,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title", attrs: { id: "myModalLabel" } }, [
-        _vm._v("Add New User")
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true

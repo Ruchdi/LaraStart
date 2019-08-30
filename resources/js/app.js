@@ -31,6 +31,7 @@ Vue.use(VueProgressBar, {
 //moment
 import moment from 'moment'
 
+
 //vForm
 import { Form, HasError, AlertError } from 'vform'
 window.Form = Form;
