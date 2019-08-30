@@ -6,8 +6,9 @@
                     <h3 class="card-title">Users Table</h3>
 
                     <div class="card-tools">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addNew"><i
-                                class="fas fa-user-plus"></i> Add New</button>
+                        <button class="btn btn-success" @click="newModal()">
+                            <i class="fas fa-user-plus"></i> Add New
+                        </button>
                     </div>
                 </div>
                 <!-- /.card-header -->
@@ -31,7 +32,9 @@
                                 <td><span class="tag tag-success">{{user.type | upText}}</span></td>
                                 <td>{{user.created_at | setDate}}</td>
                                 <td>
-                                    <a href=""><i class="fa fa-edit text-blue"></i></a>
+                                    <a href="#" @click="editModal(user)">
+                                        <i class="fa fa-edit text-blue"></i>
+                                    </a>
                                     /
                                     <a href="#" @click="deleteUser(user.id,user.name)">
                                         <i class="fa fa-trash text-red"></i>
@@ -46,12 +49,12 @@
             <!-- /.card -->
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addNewLabel">Add New User</h5>
+                        <h5 class="modal-title" id="myModalLabel">Add New User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -122,13 +125,27 @@
                 }) => (this.users = data.data));
                 this.$Progress.finish()
             },
+            newModal() {
+                //reset is a function in vForm
+                this.form.reset();
+                this.form.clear();
+                $('#myModal').modal('show');
+            },
+            editModal(user) {
+                //reset is a function in vForm
+                this.form.reset();
+                this.form.clear();
+                $('#myModal').modal('show');
+                //fill user data in a form
+                this.form.fill(user);
+            },
             createUser() {
                 this.$Progress.start()
                 // Submit the form via a POST request
                 this.form.post('api/user')
                     .then(() => {
                         this.loadUsers();
-                        $('#addNew').modal('hide');
+                        $('#myModal').modal('hide');
                         toast.fire({
                             type: 'success',
                             title: 'Created successfully'
