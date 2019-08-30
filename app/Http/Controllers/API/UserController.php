@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        //You must learn about laravel passport
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
