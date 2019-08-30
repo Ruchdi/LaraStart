@@ -8,6 +8,22 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+//Laravel Passport
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
+
 //sweetalert
 import swal from 'sweetalert2'
 window.swal = swal;
@@ -44,6 +60,7 @@ Vue.use(VueRouter)
 let routes = [
     { path: '/dashboard', component: require('./components/DashboardComponent.vue').default },
     { path: '/users', component: require('./components/UsersComponent.vue').default },
+    { path: '/developer', component: require('./components/DeveloperComponent.vue').default },
     { path: '/profile', component: require('./components/ProfileComponent.vue').default },
 ]
 const router = new VueRouter({
