@@ -113,6 +113,7 @@
             return {
                 users: [],
                 form: new Form({
+                    id: '',
                     name: '',
                     email: '',
                     password: '',
@@ -150,11 +151,12 @@
                             type: 'success',
                             title: 'Created successfully'
                         })
+                        this.$Progress.finish()
                     })
                     .catch(() => {
                         //display error
+                        this.$Progress.fail()
                     })
-                this.$Progress.finish()
             },
             editModal(user) {
                 this.editmode = true;
@@ -166,7 +168,24 @@
                 this.form.fill(user);
             },
             updateUser(){
-                console.log('Editing Data.');
+                this.$Progress.start()
+                //console.log('Editing Data.');
+                this.form.put('api/user/'+this.form.id)
+                .then(() => {
+                    //success
+                    this.loadUsers();
+                    $('#myModal').modal('hide');
+                    swal.fire(
+                        'Updated!',
+                        'User information has been deleted.',
+                        'success'
+                    )
+                    this.$Progress.finish()
+                })
+                .catch(() => {
+                    //error
+                    this.$Progress.fail()
+                })
             },
             deleteUser(id,name) {
                 swal.fire({

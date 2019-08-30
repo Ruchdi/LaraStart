@@ -2068,6 +2068,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       users: [],
       form: new Form({
+        id: '',
         name: '',
         email: '',
         password: '',
@@ -2110,9 +2111,12 @@ __webpack_require__.r(__webpack_exports__);
           type: 'success',
           title: 'Created successfully'
         });
-      })["catch"](function () {//display error
+
+        _this2.$Progress.finish();
+      })["catch"](function () {
+        //display error
+        _this2.$Progress.fail();
       });
-      this.$Progress.finish();
     },
     editModal: function editModal(user) {
       this.editmode = true; //reset is a function in vForm
@@ -2124,10 +2128,25 @@ __webpack_require__.r(__webpack_exports__);
       this.form.fill(user);
     },
     updateUser: function updateUser() {
-      console.log('Editing Data.');
+      var _this3 = this;
+
+      this.$Progress.start(); //console.log('Editing Data.');
+
+      this.form.put('api/user/' + this.form.id).then(function () {
+        //success
+        _this3.loadUsers();
+
+        $('#myModal').modal('hide');
+        swal.fire('Updated!', 'User information has been deleted.', 'success');
+
+        _this3.$Progress.finish();
+      })["catch"](function () {
+        //error
+        _this3.$Progress.fail();
+      });
     },
     deleteUser: function deleteUser(id, name) {
-      var _this3 = this;
+      var _this4 = this;
 
       swal.fire({
         title: 'Are you sure?',
@@ -2140,8 +2159,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this3.form["delete"]('/api/user/' + id).then(function () {
-            _this3.loadUsers();
+          _this4.form["delete"]('/api/user/' + id).then(function () {
+            _this4.loadUsers();
 
             swal.fire('Deleted!', 'Your file has been deleted.', 'success');
           })["catch"](function () {
