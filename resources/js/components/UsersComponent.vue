@@ -33,7 +33,9 @@
                                 <td>
                                     <a href=""><i class="fa fa-edit text-blue"></i></a>
                                     /
-                                    <a href=""><i class="fa fa-trash text-red"></i></a>
+                                    <a href="#" @click="deleteUser(user.id,user.name)">
+                                        <i class="fa fa-trash text-red"></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -78,7 +80,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="type">User Role</label>
-                                <select v-model="form.type" class="form-control" name="type" :class="{ 'is-invalid': form.errors.has('type') }">
+                                <select v-model="form.type" class="form-control" name="type"
+                                    :class="{ 'is-invalid': form.errors.has('type') }">
                                     <option value="">Select User Role</option>
                                     <option value="user">User</option>
                                     <option value="admin">Admin</option>
@@ -101,7 +104,7 @@
     export default {
         data() {
             return {
-                users : [],
+                users: [],
                 form: new Form({
                     name: '',
                     email: '',
@@ -112,9 +115,11 @@
             }
         },
         methods: {
-            loadUsers(){
+            loadUsers() {
                 this.$Progress.start()
-                axios.get('api/user').then(({data})=>(this.users = data.data));
+                axios.get('api/user').then(({
+                    data
+                }) => (this.users = data.data));
                 this.$Progress.finish()
             },
             createUser() {
@@ -122,17 +127,44 @@
                 // Submit the form via a POST request
                 this.form.post('api/user')
                     .then(() => {
+                        this.loadUsers();
                         $('#addNew').modal('hide');
                         toast.fire({
                             type: 'success',
                             title: 'Created successfully'
                         })
-                        this.loadUsers();
                     })
-                    .catch(() =>{
+                    .catch(() => {
                         //display error
                     })
                 this.$Progress.finish()
+            },
+            deleteUser(id,name) {
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert "+name+" !",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    // Send request to the server
+                    if (result.value) {
+                        this.form.delete('/api/user/'+id)
+                        .then(() => {
+                            this.loadUsers();
+                            swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        })
+                        .catch(() => {
+                            swal('Failed?', 'There was something wrong.', 'warning')
+                        })
+                    }
+                })
             }
         },
         created() {
