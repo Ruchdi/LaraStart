@@ -61,6 +61,12 @@ class UserController extends Controller
         //
     }
 
+    public function profile()
+    {
+        //show user info in profile component
+        return auth('api')->user();
+    }
+
     /**
      * Update the specified resource in storage.
      *

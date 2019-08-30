@@ -128,10 +128,11 @@
         methods: {
             loadUsers() {
                 this.$Progress.start()
-                axios.get('api/user').then(({
-                    data
-                }) => (this.users = data.data));
-                this.$Progress.finish()
+                axios.get('api/user')
+                .then(({data}) => {
+                    this.users = data.data
+                    this.$Progress.finish()
+                });
             },
             newModal() {
                 this.editmode = false;

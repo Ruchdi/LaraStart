@@ -39,9 +39,9 @@ window.toast = toast;
 import VueProgressBar from 'vue-progressbar'
 
 Vue.use(VueProgressBar, {
-  color: 'rgb(143, 255, 199)',
+  color: 'rgb(11, 134, 200)',
   failedColor: 'red',
-  height: '5px'
+  height: '20px !important'
 })
 
 //moment
