@@ -2106,15 +2106,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getProfilePicture: function getProfilePicture() {
-      var photo = this.form.photo;
-
-      if (this.form.photo) {
-        var prefix = this.form.photo.match(/\//) ? '' : '/img/profile/';
-        return prefix + this.form.photo;
-      } else {
-        photo = 'img/profiles/' + this.form.photo;
-      }
-
+      var photo = this.form.photo.match(/\//) ? this.form.photo : '/img/profile/' + this.form.photo;
       return photo;
     },
     updateProfile: function updateProfile(e) {

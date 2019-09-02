@@ -155,13 +155,7 @@
         },
         methods:{
             getProfilePicture(){
-                let photo = this.form.photo;
-                if(this.form.photo){
-                    let prefix = (this.form.photo.match(/\//) ? '' : '/img/profile/');
-                    return prefix + this.form.photo;
-                }else {
-                    photo = 'img/profiles/' + this.form.photo;
-                }
+                let photo = (this.form.photo.match(/\//)) ? this.form.photo : '/img/profile/'+this.form.photo;
                 return photo;
             },
             updateProfile(e){
