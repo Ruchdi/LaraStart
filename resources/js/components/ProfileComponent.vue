@@ -98,7 +98,7 @@
                                     <div class="col-sm-10">
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                <input type="file" @change="updateProfile" class="custom-file-input" name="photo">
                                                 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                             </div>
                                             <div class="input-group-append">
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -150,13 +150,26 @@
         mounted() {
             console.log('Component mounted.')
         },
+        methods:{
+            updateProfile(e){
+                //console.log('uploading');
+                let file = e.target.files[0];
+                //console.log(file);
+                let reader = new FileReader();
+                reader.onloadend = (file) => {
+                    //console.log('RESULT', reader.result);
+                    this.form.photo = reader.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        },
         created() {
             this.$Progress.start()
             axios.get('api/profile')
-                .then(({ data }) => {
-                    this.form.fill(data)
-                    this.$Progress.finish()
-                });
+            .then(({ data }) => {
+                this.form.fill(data)
+                this.$Progress.finish()
+            });
         }
     }
 

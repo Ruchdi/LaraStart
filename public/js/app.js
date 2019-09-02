@@ -2101,16 +2101,33 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     console.log('Component mounted.');
   },
+  methods: {
+    updateProfile: function updateProfile(e) {
+      var _this = this;
+
+      //console.log('uploading');
+      var file = e.target.files[0]; //console.log(file);
+
+      var reader = new FileReader();
+
+      reader.onloadend = function (file) {
+        //console.log('RESULT', reader.result);
+        _this.form.photo = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    }
+  },
   created: function created() {
-    var _this = this;
+    var _this2 = this;
 
     this.$Progress.start();
     axios.get('api/profile').then(function (_ref) {
       var data = _ref.data;
 
-      _this.form.fill(data);
+      _this2.form.fill(data);
 
-      _this.$Progress.finish();
+      _this2.$Progress.finish();
     });
   }
 });
@@ -60977,7 +60994,39 @@ var render = function() {
                   _vm._v(" "),
                   _vm._m(4),
                   _vm._v(" "),
-                  _vm._m(5),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 control-label",
+                        attrs: { for: "exampleInputFile" }
+                      },
+                      [_vm._v("File input")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-10" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("div", { staticClass: "custom-file" }, [
+                          _c("input", {
+                            staticClass: "custom-file-input",
+                            attrs: { type: "file", name: "photo" },
+                            on: { change: _vm.updateProfile }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-label",
+                              attrs: { for: "exampleInputFile" }
+                            },
+                            [_vm._v("Choose file")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(5)
+                      ])
+                    ])
+                  ]),
                   _vm._v(" "),
                   _vm._m(6),
                   _vm._v(" "),
@@ -61144,40 +61193,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 control-label",
-          attrs: { for: "exampleInputFile" }
-        },
-        [_vm._v("File input")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-10" }, [
-        _c("div", { staticClass: "input-group" }, [
-          _c("div", { staticClass: "custom-file" }, [
-            _c("input", {
-              staticClass: "custom-file-input",
-              attrs: { type: "file", id: "exampleInputFile" }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-file-label",
-                attrs: { for: "exampleInputFile" }
-              },
-              [_vm._v("Choose file")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-append" }, [
-            _c("span", { staticClass: "input-group-text", attrs: { id: "" } }, [
-              _vm._v("Upload")
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c("span", { staticClass: "input-group-text", attrs: { id: "" } }, [
+        _vm._v("Upload")
       ])
     ])
   },
@@ -61209,7 +61227,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
         _c(
           "button",
-          { staticClass: "btn btn-danger", attrs: { type: "submit" } },
+          { staticClass: "btn btn-success", attrs: { type: "submit" } },
           [_vm._v("Submit")]
         )
       ])
