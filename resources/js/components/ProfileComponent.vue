@@ -16,7 +16,7 @@
                     <h5 class="widget-user-desc">Web Designer</h5>
                 </div>
                 <div class="widget-user-image">
-                    <img class="img-circle" src="" alt="User Avatar">
+                    <img class="img-circle" :src="getProfilePicture()" alt="User Avatar">
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -154,6 +154,16 @@
             console.log('Component mounted.')
         },
         methods:{
+            getProfilePicture(){
+                let photo = this.form.photo;
+                if(this.form.photo){
+                    let prefix = (this.form.photo.match(/\//) ? '' : '/img/profile/');
+                    return prefix + this.form.photo;
+                }else {
+                    photo = 'img/profiles/' + this.form.photo;
+                }
+                return photo;
+            },
             updateProfile(e){
                 //console.log('uploading');
                 let file = e.target.files[0];

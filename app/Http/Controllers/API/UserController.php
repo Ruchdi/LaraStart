@@ -89,7 +89,7 @@ class UserController extends Controller
             $request->merge(['photo' => $name]);
 
             //find path of the old photo
-            $old_photo = public_path('img/profile').$currentPhoto;
+            $old_photo = public_path('img/profile/').$currentPhoto;
             if(file_exists($old_photo)){
                 @unlink($old_photo);
             }
