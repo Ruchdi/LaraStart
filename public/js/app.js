@@ -2116,6 +2116,18 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       reader.readAsDataURL(file);
+    },
+    updateInfo: function updateInfo() {
+      this.form.put('api/profile').then(function () {//success
+        // this.loadUsers();
+        // $('#myModal').modal('hide');
+        // swal.fire(
+        //     'Updated!',
+        //     'User information has been deleted.',
+        //     'success'
+        // )
+        // this.$Progress.finish()
+      })["catch"](function () {});
     }
   },
   created: function created() {
@@ -61030,7 +61042,24 @@ var render = function() {
                   _vm._v(" "),
                   _vm._m(6),
                   _vm._v(" "),
-                  _vm._m(7)
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.updateInfo($event)
+                            }
+                          }
+                        },
+                        [_vm._v("Update")]
+                      )
+                    ])
+                  ])
                 ])
               ]
             )
@@ -61216,20 +61245,6 @@ var staticRenderFns = [
             ])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_vm._v("Submit")]
-        )
       ])
     ])
   }

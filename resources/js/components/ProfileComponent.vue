@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        <button @click.prevent="updateInfo" type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -161,7 +161,24 @@
                     this.form.photo = reader.result;
                 };
                 reader.readAsDataURL(file);
-            }
+            },
+            updateInfo(){
+                this.form.put('api/profile')
+                .then(() => {
+                    //success
+                    // this.loadUsers();
+                    // $('#myModal').modal('hide');
+                    // swal.fire(
+                    //     'Updated!',
+                    //     'User information has been deleted.',
+                    //     'success'
+                    // )
+                    // this.$Progress.finish()
+                })
+                .catch(() => {
+
+                })
+            },
         },
         created() {
             this.$Progress.start()

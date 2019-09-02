@@ -67,6 +67,14 @@ class UserController extends Controller
         return auth('api')->user();
     }
 
+    public function updateProfile(Request $request)
+    {
+        //show user info in profile component
+        $user = auth('api')->user();
+        //return ['message' => 'success'];
+        return $request->photo;
+    }
+
     /**
      * Update the specified resource in storage.
      *
