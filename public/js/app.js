@@ -2377,8 +2377,9 @@ __webpack_require__.r(__webpack_exports__);
             _this4.loadUsers();
 
             swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-          })["catch"](function () {
-            swal('Failed?', 'There was something wrong.', 'warning');
+          })["catch"](function (error) {
+            //console.log(error.request.response.message);
+            swal.fire('Failed?', error.message, 'warning');
           });
         }
       });

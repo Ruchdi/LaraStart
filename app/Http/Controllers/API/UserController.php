@@ -131,6 +131,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        //Only admin can delete the data
+        $this->authorize('isAdmin');
+
         $user = User::findOrFail($id);
         // delete user
         $user->delete();

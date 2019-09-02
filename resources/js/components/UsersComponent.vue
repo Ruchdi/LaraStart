@@ -209,8 +209,9 @@
                                 'success'
                             )
                         })
-                        .catch(() => {
-                            swal('Failed?', 'There was something wrong.', 'warning')
+                        .catch((error) => {
+                            //console.log(error.request.response.message);
+                            swal.fire('Failed?', error.message, 'warning')
                         })
                     }
                 })
