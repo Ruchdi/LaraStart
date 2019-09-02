@@ -2085,9 +2085,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      btnText: "Update",
       form: new Form({
         id: '',
         name: '',
@@ -2118,28 +2121,33 @@ __webpack_require__.r(__webpack_exports__);
       reader.readAsDataURL(file);
     },
     updateInfo: function updateInfo() {
-      this.form.put('api/profile').then(function () {//success
-        // this.loadUsers();
-        // $('#myModal').modal('hide');
-        // swal.fire(
-        //     'Updated!',
-        //     'User information has been deleted.',
-        //     'success'
-        // )
-        // this.$Progress.finish()
-      })["catch"](function () {});
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.btnText = "Updating";
+      this.form.put('api/profile').then(function () {
+        //success
+        swal.fire('Updated!', 'User information has been Updated.', 'success');
+        _this2.btnText = "Update";
+
+        _this2.$Progress.finish();
+      })["catch"](function () {
+        _this2.btnText = "Update";
+
+        _this2.$Progress.fail();
+      });
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.$Progress.start();
     axios.get('api/profile').then(function (_ref) {
       var data = _ref.data;
 
-      _this2.form.fill(data);
+      _this3.form.fill(data);
 
-      _this2.$Progress.finish();
+      _this3.$Progress.finish();
     });
   }
 });
@@ -61004,7 +61012,69 @@ var render = function() {
                   _vm._v(" "),
                   _vm._m(3),
                   _vm._v(" "),
-                  _vm._m(4),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-sm-2 control-label",
+                        attrs: { for: "password" }
+                      },
+                      [_vm._v("Password")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-sm-10" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.password,
+                              expression: "form.password"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("password")
+                          },
+                          attrs: {
+                            type: "password",
+                            name: "password",
+                            placeholder: "Password"
+                          },
+                          domProps: { value: _vm.form.password },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.form,
+                                "password",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            staticClass: "form-text text-muted",
+                            attrs: { id: "passwordHelp" }
+                          },
+                          [_vm._v("Leave empty if not changing.")]
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "password" }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c(
@@ -61035,12 +61105,12 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(5)
+                        _vm._m(4)
                       ])
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(6),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
@@ -61048,7 +61118,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-primary",
-                          attrs: { type: "submit" },
+                          attrs: { disabled: _vm.form.busy, type: "submit" },
                           on: {
                             click: function($event) {
                               $event.preventDefault()
@@ -61056,7 +61126,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Update")]
+                        [_vm._v(_vm._s(_vm.btnText))]
                       )
                     ])
                   ])
@@ -61192,28 +61262,6 @@ var staticRenderFns = [
         _c("textarea", {
           staticClass: "form-control",
           attrs: { id: "inputExperience", placeholder: "Experience" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 control-label",
-          attrs: { for: "inputSkills" }
-        },
-        [_vm._v("Skills")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-10" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", id: "inputSkills", placeholder: "Skills" }
         })
       ])
     ])

@@ -87,10 +87,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
+                                    <label for="password" class="col-sm-2 control-label">Password</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                                        <input v-model="form.password" type="password" name="password" class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('password') }" placeholder="Password">
+                                        <small id="passwordHelp" class="form-text text-muted">Leave empty if not changing.</small>
+                                        <has-error :form="form" field="password"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -119,7 +121,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button @click.prevent="updateInfo" type="submit" class="btn btn-primary">Update</button>
+                                        <button @click.prevent="updateInfo" :disabled="form.busy" type="submit" class="btn btn-primary">{{btnText}}</button>
                                     </div>
                                 </div>
                             </form>
@@ -137,6 +139,7 @@
     export default {
         data() {
             return {
+                btnText : "Update",
                 form: new Form({
                     id: '',
                     name: '',
@@ -163,20 +166,22 @@
                 reader.readAsDataURL(file);
             },
             updateInfo(){
+                this.$Progress.start()
+                this.btnText = "Updating";
                 this.form.put('api/profile')
                 .then(() => {
                     //success
-                    // this.loadUsers();
-                    // $('#myModal').modal('hide');
-                    // swal.fire(
-                    //     'Updated!',
-                    //     'User information has been deleted.',
-                    //     'success'
-                    // )
-                    // this.$Progress.finish()
+                    swal.fire(
+                        'Updated!',
+                        'User information has been Updated.',
+                        'success'
+                    )
+                    this.btnText = "Update";
+                    this.$Progress.finish()
                 })
                 .catch(() => {
-
+                    this.btnText = "Update";
+                    this.$Progress.fail()
                 })
             },
         },
