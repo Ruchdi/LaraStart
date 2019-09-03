@@ -2459,7 +2459,27 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.loadUsers();
+    var _this6 = this;
+
+    this.loadUsers(); //Fire is set in app.js
+
+    Fire.$on('searching', function () {
+      _this6.$Progress.start(); //take the info form route (app.js)
+      //in
+      // data: {
+      //     search: ''
+      // },
+
+
+      var query = _this6.$parent.search;
+      axios.get('api/findUser?q=' + query).then(function (data) {
+        _this6.users = data.data;
+
+        _this6.$Progress.finish();
+      })["catch"](function () {
+        swal.fire('Failed?', 'Someting went wrong!', 'warning');
+      });
+    });
   }
 });
 
@@ -79499,7 +79519,9 @@ Vue.filter('upText', function (text) {
 });
 Vue.filter('setDate', function (date) {
   return moment__WEBPACK_IMPORTED_MODULE_3___default()(date).format('DD/MM/YYYY HH:mm');
-});
+}); //Fire
+
+window.Fire = new Vue();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -79519,7 +79541,15 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 
 var app = new Vue({
   el: '#app',
-  router: router
+  router: router,
+  data: {
+    search: ''
+  },
+  methods: {
+    searchit: function searchit() {
+      Fire.$emit('searching');
+    }
+  }
 });
 
 /***/ }),

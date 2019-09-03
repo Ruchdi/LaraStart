@@ -239,6 +239,24 @@
         },
         created() {
             this.loadUsers();
+            //Fire is set in app.js
+            Fire.$on('searching',() => {
+                this.$Progress.start()
+                //take the info form route (app.js)
+                //in
+                    // data: {
+                    //     search: ''
+                    // },
+                let query = this.$parent.search;
+                axios.get('api/findUser?q=' + query)
+                .then((data)=>{
+                    this.users = data.data
+                    this.$Progress.finish()
+                })
+                .catch(()=>{
+                   swal.fire('Failed?', 'Someting went wrong!', 'warning')
+                })
+            })
         }
     }
 
