@@ -73,6 +73,7 @@ Vue.component(AlertError.name, AlertError)
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 let routes = [
+    { path: '/home', component: require('./components/Home.vue').default },
     { path: '/dashboard', component: require('./components/DashboardComponent.vue').default },
     { path: '/users', component: require('./components/UsersComponent.vue').default },
     { path: '/developer', component: require('./components/DeveloperComponent.vue').default },
