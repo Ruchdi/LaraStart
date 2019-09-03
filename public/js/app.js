@@ -2333,6 +2333,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2355,7 +2356,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       //before load user must check authentication
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isAdminOrDeveloper()) {
         this.$Progress.start();
         axios.get('api/user').then(function (_ref) {
           var data = _ref.data;
@@ -61460,7 +61461,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row mt-5" }, [
-    _vm.$gate.isAdmin()
+    _vm.$gate.isAdminOrDeveloper()
       ? _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
@@ -61554,7 +61555,9 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    !_vm.$gate.isAdmin() ? _c("div", [_c("not-found")], 1) : _vm._e(),
+    !_vm.$gate.isAdminOrDeveloper()
+      ? _c("div", [_c("not-found")], 1)
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -61822,12 +61825,16 @@ var render = function() {
                               _vm._v("Select User Role")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "user" } }, [
-                              _vm._v("User")
-                            ]),
-                            _vm._v(" "),
                             _c("option", { attrs: { value: "admin" } }, [
                               _vm._v("Admin")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "developer" } }, [
+                              _vm._v("Developer")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "user" } }, [
+                              _vm._v("User")
                             ])
                           ]
                         ),
@@ -78891,6 +78898,13 @@ function () {
     key: "isUser",
     value: function isUser() {
       return this.user.type === 'user';
+    }
+  }, {
+    key: "isAdminOrDeveloper",
+    value: function isAdminOrDeveloper() {
+      if (this.user.type === 'admin' || this.user.type === 'developer') {
+        return true;
+      }
     }
   }]);
 

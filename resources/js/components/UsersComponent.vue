@@ -1,7 +1,7 @@
 <template>
     <!-- before load user must check authentication -->
     <div class="row mt-5">
-        <div class="col-md-12" v-if="$gate.isAdmin()">
+        <div class="col-md-12" v-if="$gate.isAdminOrDeveloper()">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Users Table</h3>
@@ -50,7 +50,7 @@
             <!-- /.card -->
         </div>
 
-        <div v-if="!$gate.isAdmin()">
+        <div v-if="!$gate.isAdminOrDeveloper()">
             <not-found></not-found>
         </div>
 
@@ -93,8 +93,9 @@
                                 <select v-model="form.type" class="form-control" name="type"
                                     :class="{ 'is-invalid': form.errors.has('type') }">
                                     <option value="">Select User Role</option>
-                                    <option value="user">User</option>
                                     <option value="admin">Admin</option>
+                                    <option value="developer">Developer</option>
+                                    <option value="user">User</option>
                                 </select>
                                 <has-error :form="form" field="type"></has-error>
                             </div>
@@ -134,7 +135,7 @@
         methods: {
             loadUsers() {
                 //before load user must check authentication
-                if(this.$gate.isAdmin()){
+                if(this.$gate.isAdminOrDeveloper()){
                     this.$Progress.start()
                     axios.get('api/user')
                     .then(({data}) => {
