@@ -1,5 +1,6 @@
 <template>
-    <div class="row mt-5">
+    <!-- before load user must check authentication -->
+    <div class="row mt-5" v-if="$gate.isAdmin()">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -127,12 +128,15 @@
         },
         methods: {
             loadUsers() {
-                this.$Progress.start()
-                axios.get('api/user')
-                .then(({data}) => {
-                    this.users = data.data
-                    this.$Progress.finish()
-                });
+                //before load user must check authentication
+                if(this.$gate.isAdmin()){
+                    this.$Progress.start()
+                    axios.get('api/user')
+                    .then(({data}) => {
+                        this.users = data.data
+                        this.$Progress.finish()
+                    });
+                }
             },
             newModal() {
                 this.editmode = false;

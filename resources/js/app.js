@@ -8,6 +8,11 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+//import gate.js
+import Gate from "./gate";
+Vue.prototype.$gate = new Gate(window.user);
+
+
 //Laravel Passport
 Vue.component(
     'passport-clients',
