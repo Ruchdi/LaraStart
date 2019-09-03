@@ -8,6 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+//laravel-vue-pagination
+Vue.component('pagination', require('laravel-vue-pagination'));
+
 //Add Not found Component
 //Ex. <not-found></not-found>
 Vue.component(

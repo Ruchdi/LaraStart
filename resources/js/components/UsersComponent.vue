@@ -26,7 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="user in users" :key="user.id">
+                            <tr v-for="user in users.data" :key="user.id">
                                 <td>{{user.id}}</td>
                                 <td>{{user.name}}</td>
                                 <td>{{user.email}}</td>
@@ -44,6 +44,9 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="card-footer">
+                    <pagination :data="users" @pagination-change-page="getResults"></pagination>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -118,7 +121,7 @@
     export default {
         data() {
             return {
-                users: [],
+                users: {},
                 form: new Form({
                     id: '',
                     name: '',
@@ -139,10 +142,17 @@
                     this.$Progress.start()
                     axios.get('api/user')
                     .then(({data}) => {
-                        this.users = data.data
+                        this.users = data
                         this.$Progress.finish()
                     });
                 }
+            },
+            // Our method to GET results from a Laravel endpoint
+            getResults(page = 1) {
+                axios.get('api/user?page=' + page)
+                    .then(response => {
+                        this.users = response.data;
+                    });
             },
             newModal() {
                 this.editmode = false;
