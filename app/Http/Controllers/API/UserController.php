@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         //$this->authorize('isAdmin');
         if(\Gate::allows('isAdmin') || \Gate::allows('isDeveloper')){
-           return User::latest()->paginate(10);
+           return User::latest()->paginate(5);
         }
     }
 
@@ -148,7 +148,9 @@ class UserController extends Controller
                 $query->where('name', 'LIKE', "%$search%")
                         ->orWhere('email', 'LIKE', "%$search%");
             })->paginate(5);
-            return $users;
+        }else{
+            $users =User::latest()->paginate(10);
         }
+        return $users;
     }
 }

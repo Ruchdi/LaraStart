@@ -79546,9 +79546,10 @@ var app = new Vue({
     search: ''
   },
   methods: {
-    searchit: function searchit() {
+    //call the function in 1 sec.
+    searchit: _.debounce(function () {
       Fire.$emit('searching');
-    }
+    }, 1000)
   }
 });
 
