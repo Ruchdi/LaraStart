@@ -8,6 +8,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+//Add Not found Component
+//Ex. <not-found></not-found>
+Vue.component(
+    'not-found',
+    require('./components/NotFoundComponent.vue').default
+);
+
 //import gate.js
 import Gate from "./gate";
 Vue.prototype.$gate = new Gate(window.user);

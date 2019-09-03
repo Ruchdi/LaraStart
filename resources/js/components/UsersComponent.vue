@@ -1,7 +1,7 @@
 <template>
     <!-- before load user must check authentication -->
-    <div class="row mt-5" v-if="$gate.isAdmin()">
-        <div class="col-md-12">
+    <div class="row mt-5">
+        <div class="col-md-12" v-if="$gate.isAdmin()">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Users Table</h3>
@@ -49,6 +49,11 @@
             </div>
             <!-- /.card -->
         </div>
+
+        <div v-if="!$gate.isAdmin()">
+            <not-found></not-found>
+        </div>
+
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">

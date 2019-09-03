@@ -65,6 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="d-block">
                             {{ Auth::user()->name }}
                         </a>
+                        <small>{{ Auth::user()->type }}</small>
                     </div>
                 </div>
 
