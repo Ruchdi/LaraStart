@@ -77,6 +77,8 @@ let routes = [
     { path: '/users', component: require('./components/UsersComponent.vue').default },
     { path: '/developer', component: require('./components/DeveloperComponent.vue').default },
     { path: '/profile', component: require('./components/ProfileComponent.vue').default },
+    //if path not matching for above if will show not found page
+    { path: '*', component: require('./components/NotFoundComponent.vue').default },
 ]
 const router = new VueRouter({
     mode : 'history',
